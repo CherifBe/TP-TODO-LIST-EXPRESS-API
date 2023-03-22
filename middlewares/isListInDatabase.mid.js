@@ -6,6 +6,9 @@ const isListInDatabase = async (req, res, next) => {
         if (!getListById) {
             return res.status(404).json({ message: 'List not found' });
         }
+        if (getListById._userId !== req.user.userId) {
+            return res.status(401).json({ message: 'Not authorized' });
+        }
         next();
     } catch (error) {
         next(error);
