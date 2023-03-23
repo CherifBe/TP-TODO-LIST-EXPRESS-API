@@ -58,8 +58,8 @@ const deleteTodo = async (req, res) => {
     return res.status(202).json({ message: 'todo deleted !' });
 };
 
-module.exports = getTodo;
-module.exports = getTodoList;
-module.exports = insertTodo;
-module.exports = updateTodo;
-module.exports = deleteTodo;
+module.exports.getTodo = getTodo;
+module.exports.getTodoList = getTodoList;
+module.exports.insertTodo = insertTodo;
+module.exports.updateTodo = updateTodo;
+module.exports.deleteTodo = deleteTodo;

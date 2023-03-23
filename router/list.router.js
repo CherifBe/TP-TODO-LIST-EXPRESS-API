@@ -1,15 +1,11 @@
 const router = require('express').Router();
-const {
-    getLists,
-    updateList,
-    deleteList,
-} = require('../controllers/list.controller');
+const listController = require('../controllers/list.controller');
 const authorization = require('../middlewares/authorization.mid');
 const isListInDatabase = require('../middlewares/isListInDatabase.mid');
 
 router.get('/', authorization, async (req, res, next) => {
     try {
-        await getLists(req, res, next);
+        await listController.getLists(req, res, next);
     } catch (error) {
         next(error);
     }
@@ -21,7 +17,7 @@ router.patch(
     isListInDatabase,
     async (req, res, next) => {
         try {
-            await updateList(req, res, next);
+            await listController.updateList(req, res, next);
         } catch (error) {
             next(error);
         }
@@ -34,7 +30,7 @@ router.delete(
     isListInDatabase,
     async (req, res, next) => {
         try {
-            await deleteList(req, res, next);
+            await listController.deleteList(req, res, next);
         } catch (error) {
             next(error);
         }

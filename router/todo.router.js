@@ -2,13 +2,7 @@ const router = require('express').Router();
 const authorization = require('../middlewares/authorization.mid');
 const isTodoInDatabase = require('../middlewares/isTodoInDatabase');
 const isListInDatabase = require('../middlewares/isListInDatabase.mid');
-const {
-    getTodoList,
-    getTodo,
-    insertTodo,
-    updateTodo,
-    deleteTodo,
-} = require('../controllers/todo.controller');
+const todoController = require('../controllers/todo.controller');
 
 router.get(
     '/:todoId',
@@ -18,7 +12,7 @@ router.get(
     async (req, res, next) => {
         // TODO: REVOIR LES MIDDLEWARES
         try {
-            await getTodo(req, res);
+            await todoController.getTodo(req, res);
         } catch (error) {
             next(error);
         }
@@ -31,7 +25,7 @@ router.get(
     isListInDatabase,
     async (req, res, next) => {
         try {
-            await getTodoList(req, res, next);
+            await todoController.getTodoList(req, res, next);
         } catch (error) {
             next(error);
         }
@@ -40,7 +34,7 @@ router.get(
 
 router.post('/', authorization, async (req, res, next) => {
     try {
-        await insertTodo(req, res, next);
+        await todoController.insertTodo(req, res, next);
     } catch (error) {
         next(error);
     }
@@ -53,7 +47,7 @@ router.patch(
     isListInDatabase,
     async (req, res, next) => {
         try {
-            await updateTodo(req, res, next);
+            await todoController.updateTodo(req, res, next);
         } catch (error) {
             next(error);
         }
@@ -67,7 +61,7 @@ router.delete(
     isListInDatabase,
     async (req, res, next) => {
         try {
-            await deleteTodo(req, res, next);
+            await todoController.deleteTodo(req, res, next);
         } catch (error) {
             next(error);
         }

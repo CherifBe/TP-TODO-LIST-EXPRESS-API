@@ -16,7 +16,7 @@ app.use('/auth', authRouter);
 app.use('/list', listRouter);
 app.use('/todo', todoRouter);
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
     res.status(500).json({ status: 'error', message: err });
 });
 

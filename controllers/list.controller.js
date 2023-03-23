@@ -20,6 +20,6 @@ const deleteList = async (req, res) => {
     return res.status(202).json({ message: 'list deleted !' });
 };
 
-module.exports = getLists;
-module.exports = updateList;
-module.exports = deleteList;
+module.exports.getLists = getLists;
+module.exports.updateList = updateList;
+module.exports.deleteList = deleteList;

@@ -54,5 +54,5 @@ const login = async (req, res) => {
     res.status(200).json(dataToSend);
 };
 
-module.exports = signup;
-module.exports = login;
+module.exports.signup = signup;
+module.exports.login = login;
