@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
+const List = require('../models/list.model');
+const Todo = require('../models/todo.model');
 
 const signup = async (req, res) => {
     // TODO: Revenir sur la sécurité
@@ -54,5 +56,11 @@ const login = async (req, res) => {
     res.status(200).json(dataToSend);
 };
 
+const deleteUser = async (req, res) => {
+    // Pour supprimer notre utilisateur, nous devons d'abord récupérer toutes ses listes
+    // Afin de supprimer toutes les notes associées
+};
+
 module.exports.signup = signup;
 module.exports.login = login;
+module.exports.deleteUser = deleteUser;

@@ -11,6 +11,14 @@ router.get('/', authorization, async (req, res, next) => {
     }
 });
 
+router.post('/', authorization, async (req, res, next) => {
+    try {
+        await listController.insertList(req, res, next);
+    } catch (error) {
+        next(error);
+    }
+});
+
 router.patch(
     '/:listId',
     authorization,

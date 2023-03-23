@@ -17,4 +17,12 @@ router.post('/login', async (req, res, next) => {
     }
 });
 
+router.delete('/delete/:userId', async (req, res, next) => {
+    try {
+        await authController.deleteUser(req, res, next);
+    } catch (error) {
+        next(error);
+    }
+});
+
 module.exports = router;

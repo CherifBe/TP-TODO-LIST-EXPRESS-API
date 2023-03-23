@@ -5,7 +5,7 @@ const isListInDatabase = require('../middlewares/isListInDatabase.mid');
 const todoController = require('../controllers/todo.controller');
 
 router.get(
-    '/:todoId',
+    '/unique/:todoId',
     authorization,
     isTodoInDatabase,
     isListInDatabase,

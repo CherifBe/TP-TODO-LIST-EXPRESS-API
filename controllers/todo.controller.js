@@ -13,9 +13,9 @@ const getTodoList = async (req, res) => {
 
 const insertTodo = async (req, res) => {
     const todoFromRequest = req.body;
-    const toModelKeys = ['listId', 'title', 'content', 'paragraphe'];
+    const todoModelKeys = ['listId', 'title', 'content', 'paragraph'];
     const isEveryKeyInRequest = Object.keys(todoFromRequest).every((key) =>
-        toModelKeys.includes(key)
+        todoModelKeys.includes(key)
     );
     if (!isEveryKeyInRequest) {
         return res.status(422).json({
@@ -26,7 +26,7 @@ const insertTodo = async (req, res) => {
     if (!getListById) {
         return res.status(404).json({ message: 'List not found' });
     }
-    if (getListById.userId !== req.user.userId) {
+    if (getListById.userId.toString() !== req.user.userId) {
         return res.status(401).json({ message: 'Not authorized' });
     }
     const ans = await Todo.create(todoFromRequest);
@@ -35,9 +35,9 @@ const insertTodo = async (req, res) => {
 
 const updateTodo = async (req, res) => {
     const todoFromRequest = req.body; // TODO: Faire fichier service pour éviter de répéter le code
-    const toModelKeys = ['listId', 'title', 'content', 'paragraphe'];
+    const todoModelKeys = ['listId', 'title', 'content', 'paragraph'];
     const isEveryKeyInRequest = Object.keys(todoFromRequest).every((key) =>
-        toModelKeys.includes(key)
+        todoModelKeys.includes(key)
     );
     if (!isEveryKeyInRequest) {
         return res.status(422).json({
