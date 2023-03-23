@@ -59,6 +59,17 @@ const login = async (req, res) => {
 const deleteUser = async (req, res) => {
     // Pour supprimer notre utilisateur, nous devons d'abord récupérer toutes ses listes
     // Afin de supprimer toutes les notes associées
+    const lists = await List.find({ userId: req.params.userId });
+    if (lists.length > 0) {
+        for (const list of lists) {
+            await Todo.deleteMany({ listId: list._id.toString() });
+        }
+        // Une fois que tous les todos on peut supprimer les listes de l'utilisateurs;
+        await List.deleteMany({ userId: req.params.userId });
+    }
+    // Maintenant que nous avons supprimé tout ce qui est relatif à l'utilisateur, nous pouvons le supprimer
+    await User.findByIdAndDelete(req.params.userId);
+    return res.status(202).json({ message: 'User deleted !' });
 };
 
 module.exports.signup = signup;

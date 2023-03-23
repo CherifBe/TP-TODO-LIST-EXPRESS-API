@@ -7,6 +7,7 @@ const isTodoInDatabase = async (req, res, next) => {
             return res.status(404).json({ message: 'Todo not found' });
         }
         req.params.listId = getTodoById.listId;
+        req.todo = getTodoById;
         next();
     } catch (error) {
         next(error);

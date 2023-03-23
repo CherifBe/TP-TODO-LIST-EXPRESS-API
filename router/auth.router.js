@@ -17,7 +17,7 @@ router.post('/login', async (req, res, next) => {
     }
 });
 
-router.delete('/delete/:userId', async (req, res, next) => {
+router.delete('/:userId', async (req, res, next) => {
     try {
         await authController.deleteUser(req, res, next);
     } catch (error) {
