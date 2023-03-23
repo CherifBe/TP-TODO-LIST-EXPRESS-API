@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 
-export async function signup(req, res) {
+const signup = async (req, res) => {
     // TODO: Revenir sur la sécurité
     if (!('email' in req.body && 'password' in req.body)) {
         return res
@@ -24,9 +24,9 @@ export async function signup(req, res) {
             email,
         },
     });
-}
+};
 
-export async function login(req, res) {
+const login = async (req, res) => {
     if (!('email' in req.body && 'password' in req.body)) {
         return res
             .status(422)
@@ -52,4 +52,7 @@ export async function login(req, res) {
         ),
     };
     res.status(200).json(dataToSend);
-}
+};
+
+module.exports = signup;
+module.exports = login;

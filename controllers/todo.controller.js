@@ -1,17 +1,17 @@
 const Todo = require('../models/todo.model');
 const List = require('../models/list.model');
 
-export async function getTodo(req, res) {
+const getTodo = async (req, res) => {
     const getTodoById = await Todo.findById(req.params.todoId);
     res.status(200).json(getTodoById);
-}
+};
 
-export async function getTodoList(req, res) {
+const getTodoList = async (req, res) => {
     const getTodoListByListId = await Todo.find({ listId: req.params.listId });
     res.status(200).json(getTodoListByListId);
-}
+};
 
-export async function insertTodo(req, res) {
+const insertTodo = async (req, res) => {
     const todoFromRequest = req.body;
     const toModelKeys = ['listId', 'title', 'content', 'paragraphe'];
     const isEveryKeyInRequest = Object.keys(todoFromRequest).every((key) =>
@@ -31,9 +31,9 @@ export async function insertTodo(req, res) {
     }
     const ans = await Todo.create(todoFromRequest);
     res.status(201).json(ans);
-}
+};
 
-export async function updateTodo(req, res) {
+const updateTodo = async (req, res) => {
     const todoFromRequest = req.body; // TODO: Faire fichier service pour éviter de répéter le code
     const toModelKeys = ['listId', 'title', 'content', 'paragraphe'];
     const isEveryKeyInRequest = Object.keys(todoFromRequest).every((key) =>
@@ -51,9 +51,15 @@ export async function updateTodo(req, res) {
         message: 'todo updated !',
         updateTodo: ans,
     });
-}
+};
 
-export async function deleteTodo(req, res) {
+const deleteTodo = async (req, res) => {
     await Todo.findByIdAndDelete(req.params.todoId);
     return res.status(202).json({ message: 'todo deleted !' });
-}
+};
+
+module.exports = getTodo;
+module.exports = getTodoList;
+module.exports = insertTodo;
+module.exports = updateTodo;
+module.exports = deleteTodo;
