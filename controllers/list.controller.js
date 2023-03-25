@@ -1,5 +1,6 @@
 const List = require('../models/list.model');
 const Todo = require('../models/todo.model');
+const checkRequest = require('../services/checkRequest.service');
 
 const getLists = async (req, res) => {
     const getListsByUserId = await List.find({ userId: req.user.userId });
@@ -7,14 +8,19 @@ const getLists = async (req, res) => {
 };
 
 const insertList = async (req, res) => {
+    if (!('userId' in req.body && 'title' in req.body)) {
+        return res.status(422).json({ message: 'need 2 keys : userId, title' });
+    }
     const listFromRequest = req.body;
-    const listModelKeys = ['userId', 'title']; // TODO: Vérifier en base si titre unique avec ce même utilisateur
-    const isEveryKeyInRequest = Object.keys(listFromRequest).every((key) =>
-        listModelKeys.includes(key)
-    );
-    if (!isEveryKeyInRequest) {
+    const listModelKeys = ['userId', 'title'];
+    checkRequest(res, listFromRequest, listModelKeys);
+    const titleAlreadyExist = await List.find({
+        userId: listFromRequest.userId,
+        title: listFromRequest.title,
+    });
+    if (titleAlreadyExist.length > 0) {
         return res.status(422).json({
-            message: "Keys didn't correspond",
+            message: 'This title already exist in your lists',
         });
     }
     const ans = await List.create(listFromRequest);
@@ -22,6 +28,9 @@ const insertList = async (req, res) => {
 };
 
 const updateList = async (req, res) => {
+    const listFromRequest = req.body;
+    const listModelKeys = ['userId', 'title'];
+    checkRequest(res, listFromRequest, listModelKeys);
     const ans = await List.findByIdAndUpdate(req.params.listId, req.body, {
         new: true,
     });

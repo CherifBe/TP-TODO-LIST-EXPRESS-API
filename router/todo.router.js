@@ -10,7 +10,6 @@ router.get(
     isTodoInDatabase,
     isListInDatabase,
     async (req, res, next) => {
-        // TODO: REVOIR LES MIDDLEWARES
         try {
             await todoController.getTodo(req, res);
         } catch (error) {
@@ -53,7 +52,7 @@ router.patch(
         }
     }
 );
-// TODO: Ajouter un middleware pour la vérification de l'utilisateur
+
 router.delete(
     '/:todoId',
     authorization,

@@ -1,5 +1,6 @@
 const Todo = require('../models/todo.model');
 const List = require('../models/list.model');
+const checkRequest = require('../services/checkRequest.service');
 
 const getTodo = async (req, res) => {
     const getTodoById = await Todo.findById(req.params.todoId);
@@ -14,14 +15,7 @@ const getTodoList = async (req, res) => {
 const insertTodo = async (req, res) => {
     const todoFromRequest = req.body;
     const todoModelKeys = ['listId', 'title', 'content', 'paragraph'];
-    const isEveryKeyInRequest = Object.keys(todoFromRequest).every((key) =>
-        todoModelKeys.includes(key)
-    );
-    if (!isEveryKeyInRequest) {
-        return res.status(422).json({
-            message: "Keys didn't correspond",
-        });
-    }
+    checkRequest(res, todoFromRequest, todoModelKeys);
     const getListById = await List.findById(todoFromRequest.listId);
     if (!getListById) {
         return res.status(404).json({ message: 'List not found' });
@@ -34,16 +28,9 @@ const insertTodo = async (req, res) => {
 };
 
 const updateTodo = async (req, res) => {
-    const todoFromRequest = req.body; // TODO: Faire fichier service pour éviter de répéter le code
+    const todoFromRequest = req.body;
     const todoModelKeys = ['listId', 'title', 'content', 'paragraph'];
-    const isEveryKeyInRequest = Object.keys(todoFromRequest).every((key) =>
-        todoModelKeys.includes(key)
-    );
-    if (!isEveryKeyInRequest) {
-        return res.status(422).json({
-            message: "Keys didn't correspond",
-        });
-    }
+    checkRequest(res, todoFromRequest, todoModelKeys);
     const ans = await Todo.findByIdAndUpdate(req.params.todoId, req.body, {
         new: true,
     });

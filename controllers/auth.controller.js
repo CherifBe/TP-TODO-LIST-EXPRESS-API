@@ -5,11 +5,21 @@ const List = require('../models/list.model');
 const Todo = require('../models/todo.model');
 
 const signup = async (req, res) => {
-    // TODO: Revenir sur la sécurité
     if (!('email' in req.body && 'password' in req.body)) {
         return res
             .status(422)
             .json({ message: 'need 2 keys : email, password' });
+    }
+    const regAlphaNum = new RegExp('^[A-Za-z0-9 ]+$');
+
+    if (
+        req.body.email === '' ||
+        req.body.email === null ||
+        !regAlphaNum.test(req.body.email) ||
+        req.body.password === '' ||
+        req.body.password === null
+    ) {
+        return res.status(422).json({ message: 'Format is not correct' });
     }
     const { email, password } = req.body;
     const foundUser = await User.findOne({ email });
