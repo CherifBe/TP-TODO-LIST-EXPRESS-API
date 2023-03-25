@@ -1,9 +1,9 @@
 # Tasks by Cherif
 
 ***
-###Cet API a pour objectif de "livrer" un front de gestion de tache.
+Cet API a pour objectif de "livrer" un front de gestion de tache.
 Elle propose la création, modification, suppression et lecture des taches.
-Chaque tache étant reliée à une liste de tache, chaque liste de tache étant reliée à un utilisateur.###
+Chaque tache étant reliée à une liste de tache, chaque liste de tache étant reliée à un utilisateur.
 
 ***
 Pour installer mon projet veuillez proceder comme suit:
