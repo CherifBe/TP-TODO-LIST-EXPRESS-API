@@ -13,6 +13,13 @@ const getTodoList = async (req, res) => {
 };
 
 const insertTodo = async (req, res) => {
+    if (
+        !('listId' in req.body && 'title' in req.body && 'content' in req.body)
+    ) {
+        return res
+            .status(422)
+            .json({ message: 'need 3 keys : listId, title and content' });
+    }
     const todoFromRequest = req.body;
     const todoModelKeys = ['listId', 'title', 'content', 'paragraph'];
     checkRequest(res, todoFromRequest, todoModelKeys);
